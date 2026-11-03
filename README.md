@@ -23,10 +23,22 @@ standalone project with a thread pool, a cleaner client and automated tests.
 
 ## How it works
 
-```
-Client #1 --+                                       +--> ClientHandler #1 (pool-1-thread-1)
-Client #2 --+--> Server accept loop (main thread) --+--> ClientHandler #2 (pool-1-thread-2)
-Client #3 --+                                       +--> ClientHandler #3 (pool-1-thread-3)
+The main thread only accepts connections. Every client is then served by its own thread from the pool until it disconnects.
+
+```mermaid
+flowchart LR
+    C1["Client #1"] --> A
+    C2["Client #2"] --> A
+    C3["Client #3"] --> A
+    A["Server accept loop<br>(main thread)"]
+    subgraph pool["Thread pool (10 threads)"]
+        H1["ClientHandler #1<br>pool-1-thread-1"]
+        H2["ClientHandler #2<br>pool-1-thread-2"]
+        H3["ClientHandler #3<br>pool-1-thread-3"]
+    end
+    A --> H1
+    A --> H2
+    A --> H3
 ```
 
 | Class | What it does |
