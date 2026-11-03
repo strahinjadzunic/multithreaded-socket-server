@@ -30,7 +30,7 @@ flowchart LR
     C1["Client #1"] --> A
     C2["Client #2"] --> A
     C3["Client #3"] --> A
-    A["Server accept loop<br>(main thread)"]
+    A["Server<br>accept loop<br>(main thread)"]
     subgraph pool["Thread pool (10 threads)"]
         H1["ClientHandler #1<br>pool-1-thread-1"]
         H2["ClientHandler #2<br>pool-1-thread-2"]
